@@ -415,13 +415,15 @@ h1, h2, h3, .brand, .pull, .sec-title {
 @media (max-width: 700px) {
   .wrap, .meta-strip .inner { padding-left: 16px; padding-right: 16px; }
   .nav nav a { margin-left: 6px; font-size: 14px; padding-left: 6px; padding-right: 6px; }
-  .stat .n.ink { padding-top: 0; }
   .hero { padding-top: 22px; }
   .hero h1, .post h1, .hero-list h1 { font-size: 26px; }
-  .stats { grid-template-columns: 1fr; }
-  .stat { border-right: none; border-bottom: 1px solid var(--line); }
-  .stat:last-child { border-bottom: none; }
-  .stat .n { font-size: 32px; }
+  /* Keep the three facts in one short row. Stacking them was taller than the headline. */
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 10px; }
+  .stat { padding: 8px 8px 7px; border-right: 1px solid var(--line); border-bottom: none; }
+  .stat:last-child { border-right: none; }
+  .stat .n { font-size: 22px; }
+  .stat .n.ink { font-size: 18px; padding-top: 3px; }
+  .stat .l { margin-top: 2px; font-size: 11px; letter-spacing: 0; line-height: 1.3; }
   .points { grid-template-columns: 1fr; }
   .points-label {
     writing-mode: horizontal-tb;
