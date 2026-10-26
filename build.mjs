@@ -369,12 +369,9 @@ fs.writeFileSync(
 
 for (const t of ['cn', 'intl']) {
   const list = posts.filter((p) => p.type === t);
-  const latest = list[0];
   const inner = `<section class="hero hero-list"><div class="wrap">
-<div class="badges"><span class="badge red">${TYPE[t]}</span><span class="badge outline">${list.length} 期</span></div>
 <h1>${TYPE[t]}动态</h1>
 <p class="lede">${BLURB[t]}</p>
-${latest ? stats(list.length, '期归档', TYPE[t], '栏目', latest.time, '最近更新') : ''}
 </div></section>
 <div class="wrap"><section class="section"><div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">按日归档</h2></div>
 ${grouped(list)}

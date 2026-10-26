@@ -87,7 +87,7 @@ h1, h2, h3, .brand, .pull, .sec-title {
 }
 
 .hero { padding: 32px 0 28px; background: #fff; border-bottom: 1px solid var(--line); }
-.hero-list { padding-bottom: 8px; }
+.hero-list { padding-bottom: 28px; }
 .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .badge {
   display: inline-flex;
@@ -148,8 +148,7 @@ h1, h2, h3, .brand, .pull, .sec-title {
   background: #fff;
   margin-top: 18px;
 }
-.hero-list .stats, .post .stats { border: 1px solid var(--line); }
-.post .stats { margin: 0 0 28px; }
+.post .stats { border: 1px solid var(--line); margin: 0 0 28px; }
 .stat { padding: 16px 16px 14px; border-right: 1px solid var(--line); min-width: 0; }
 .stat:last-child { border-right: none; }
 .stat .n {
