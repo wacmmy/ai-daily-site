@@ -14,7 +14,7 @@ h1,h2,h3,.brand{font-family:"Noto Serif CJK SC","Songti SC","Source Han Serif SC
 .card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:.15s}.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.07);transform:translateY(-2px)}
 .card h3{font-size:19px;margin:8px 0;line-height:1.4}.card p{color:#4a463f;font-size:14px;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .cf{margin-top:auto;display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}.read{color:var(--ink);font-weight:600}
-.meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute)}.tag{color:#fff;border-radius:4px;padding:1px 8px;font-size:12px}.tag.cn{background:var(--cn)}.tag.intl{background:var(--intl)}
+.meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute)}.when{white-space:nowrap}.tag{color:#fff;border-radius:4px;padding:1px 8px;font-size:12px}.tag.cn{background:var(--cn)}.tag.intl{background:var(--intl)}
 .ph1{font-size:34px;margin:36px 0 0}.post{max-width:760px;margin:36px auto}.post h1{font-size:34px;line-height:1.35;margin:12px 0 4px}.sub{color:var(--mute);font-size:14px;margin-bottom:12px}
 .body h3{font-size:22px;margin:30px 0 8px}.body h4{font-size:17px;margin:20px 0 4px}.src{font-size:13px;color:var(--mute);word-break:break-all;margin:2px 0}.src a,.body a{color:var(--intl);text-decoration:underline}
 .back{display:inline-block;margin-top:30px;color:var(--mute)}.foot{color:var(--mute);font-size:13px;padding:40px 20px;border-top:1px solid var(--line);margin-top:40px}

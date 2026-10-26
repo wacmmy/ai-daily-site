@@ -27,10 +27,12 @@ const CSS=fs.readFileSync('src/style.css','utf8');
 const page=(title,active,inner,root='')=>`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><link rel="stylesheet" href="${root}style.css"></head><body>
 <header class="top"><div class="wrap nav"><a class="brand" href="${root}index.html">AI 日报</a><nav>
 <a href="${root}index.html" class="${active==='home'?'on':''}">首页</a><a href="${root}cn.html" class="${active==='cn'?'on':''}">国内动态</a><a href="${root}intl.html" class="${active==='intl'?'on':''}">国际动态</a></nav></div></header>
-<main class="wrap">${inner}</main><footer class="wrap foot">每日国内（北京时间 9:00/21:00）与国际（美东 9:00/21:00）两次更新 · 内容由亦菲整理</footer></body></html>`;
-const card=p=>`<a class="card" href="${p.root||''}p/${p.slug}.html"><div class="meta"><span class="tag ${p.type}">${TYPE[p.type]}</span><span>${p.time}</span></div><h3>${esc(p.headline)}</h3><p>${esc(p.summary)}</p><div class="cf"><span>${p.items} 条</span><span class="read">阅读 →</span></div></a>`;
+<main class="wrap">${inner}</main><footer class="wrap foot">每日更新（上海时间）：国际约 09:00，国内约 21:00 · 内容由亦菲整理</footer></body></html>`;
+const fmtMD=d=>{const [,m,dd]=d.split('-');return `${+m}月${+dd}日`;};
+// withDate：没有日分组标题时必须带月日。只写 09:00 时，昨天的国际晨报会被看成今天早上那期。
+const card=(p,withDate=false)=>`<a class="card" href="${p.root||''}p/${p.slug}.html"><div class="meta"><span class="tag ${p.type}">${TYPE[p.type]}</span><span class="when">${withDate?fmtMD(p.date)+' ':''}${p.time}</span></div><h3>${esc(p.headline)}</h3><p>${esc(p.summary)}</p><div class="cf"><span>${p.items} 条</span><span class="read">阅读 →</span></div></a>`;
 function grouped(list){const g={};for(const p of list)(g[p.date]??=[]).push(p);
-  return Object.keys(g).sort().reverse().map(d=>`<section class="day"><h2 class="dh">${fmtDate(d)}</h2><div class="grid">${g[d].map(card).join('')}</div></section>`).join('');}
+  return Object.keys(g).sort().reverse().map(d=>`<section class="day"><h2 class="dh">${fmtDate(d)}</h2><div class="grid">${g[d].map(p=>card(p,false)).join('')}</div></section>`).join('');}
 const posts=fs.readdirSync(SRC).filter(f=>f.endsWith('.md')).map(parse)
   .sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
 fs.rmSync(OUT,{recursive:true,force:true}); fs.mkdirSync(OUT+'/p',{recursive:true});
@@ -44,7 +46,7 @@ points=points.slice(0,6);
 const home=`<section class="hero"><div class="kicker">今日头条 · ${fmtDate(top.date)} ${top.time} · ${TYPE[top.type]}</div>
 <h1><a href="p/${top.slug}.html">${esc(top.headline)}</a></h1><p class="lede">${esc(top.summary)}</p>
 ${points.length?`<div class="points"><div class="ph">要点</div><ul>${points.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}</section>
-<div class="subs">${subs.map(card).join('')}</div><h2 class="sec">最新报告</h2>${grouped(posts)}`;
+<div class="subs">${subs.map(p=>card(p,true)).join('')}</div><h2 class="sec">最新报告</h2>${grouped(posts)}`;
 fs.writeFileSync(OUT+'/index.html',page('AI 日报','home',home));
 for(const t of ['cn','intl']) fs.writeFileSync(`${OUT}/${t}.html`,page(`${TYPE[t]}动态 · AI 日报`,t,`<h1 class="ph1">${TYPE[t]}动态</h1>${grouped(posts.filter(p=>p.type===t))}`));
 for(const p of posts) fs.writeFileSync(`${OUT}/p/${p.slug}.html`,page(p.title,p.type,`<article class="post"><div class="meta"><span class="tag ${p.type}">${TYPE[p.type]}</span><span>${fmtDate(p.date)} ${p.time}（上海时间）</span><span>${p.items} 条</span></div><h1>${esc(p.headline)}</h1><div class="sub">${esc(p.title)}</div><p class="lede">${esc(p.summary)}</p><div class="body">${renderBody(p.body)}</div><a class="back" href="../index.html">← 返回首页</a></article>`,'../'));
