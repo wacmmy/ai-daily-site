@@ -70,13 +70,15 @@ h1, h2, h3, .brand, .pull, .sec-title {
 .brand span { color: var(--red); }
 .nav nav { display: flex; flex-wrap: wrap; align-items: center; }
 .nav nav a {
-  margin-left: 22px;
+  margin-left: 14px;
   color: var(--mute);
   font-size: 14px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: 44px;
   min-height: 44px;
-  padding: 6px 0;
+  padding: 6px 8px;
   border-bottom: 2px solid transparent;
 }
 .nav nav a.on, .nav nav a:hover {
@@ -412,7 +414,8 @@ h1, h2, h3, .brand, .pull, .sec-title {
 }
 @media (max-width: 700px) {
   .wrap, .meta-strip .inner { padding-left: 16px; padding-right: 16px; }
-  .nav nav a { margin-left: 14px; font-size: 14px; }
+  .nav nav a { margin-left: 6px; font-size: 14px; padding-left: 6px; padding-right: 6px; }
+  .stat .n.ink { padding-top: 0; }
   .hero { padding-top: 22px; }
   .hero h1, .post h1, .hero-list h1 { font-size: 26px; }
   .stats { grid-template-columns: 1fr; }
