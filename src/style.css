@@ -1,25 +1,431 @@
-:root{--bg:#f7f3ea;--ink:#1f1d1a;--mute:#6f685c;--line:#e2dacb;--card:#fffdf8;--cn:#b5452f;--intl:#2f5d8a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 -apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}
-a{color:inherit;text-decoration:none}.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-h1,h2,h3,.brand{font-family:"Noto Serif CJK SC","Songti SC","Source Han Serif SC",Georgia,serif}
-.top{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:9}.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
-.brand{font-size:22px;font-weight:700}.nav nav a{margin-left:22px;color:var(--mute)}.nav nav a.on,.nav nav a:hover{color:var(--ink);border-bottom:2px solid var(--ink);padding-bottom:4px}
-.hero{padding:44px 0 24px;border-bottom:1px solid var(--line)}.kicker{color:var(--cn);font-size:14px;letter-spacing:.08em}
-.hero h1{font-size:40px;line-height:1.3;margin:10px 0 14px}.lede{color:#3d3a34;font-size:17px}
-.points{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 22px;margin-top:18px}.ph{font-weight:600;color:var(--mute);font-size:14px}.points ul{margin:6px 0;padding-left:20px}
-.subs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}.sec{font-size:26px;margin:36px 0 8px}
-.dh{font-size:18px;color:var(--mute);margin:24px 0 12px;border-bottom:1px solid var(--line);padding-bottom:6px}
-/* 按日分组的卡片：auto-fit 会收起空列，一天 1 条拉满、2 条对半、更多再成网格。手机强制单列。 */
-.grid{display:grid;grid-template-columns:1fr;gap:16px}
-.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;transition:.15s}.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.07);transform:translateY(-2px)}
-.card h3{font-size:19px;margin:8px 0;line-height:1.4}.card p{color:#4a463f;font-size:14px;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.cf{margin-top:auto;display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}.read{color:var(--ink);font-weight:600}
-.meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute)}.tag{color:#fff;border-radius:4px;padding:1px 8px;font-size:12px}.tag.cn{background:var(--cn)}.tag.intl{background:var(--intl)}
-.ph1{font-size:34px;margin:36px 0 0}.post{max-width:760px;margin:36px auto}.post h1{font-size:34px;line-height:1.35;margin:12px 0 4px}.sub{color:var(--mute);font-size:14px;margin-bottom:12px}
-.body h3{font-size:22px;margin:30px 0 8px}.body h4{font-size:17px;margin:20px 0 4px}.src{font-size:13px;color:var(--mute);word-break:break-all;margin:2px 0}.src a,.body a{color:var(--intl);text-decoration:underline}
-.back{display:inline-block;margin-top:30px;color:var(--mute)}.foot{color:var(--mute);font-size:13px;padding:40px 20px;border-top:1px solid var(--line);margin-top:40px}
-@media(max-width:700px){.subs{grid-template-columns:1fr}.hero h1{font-size:28px}.nav nav a{margin-left:12px;font-size:14px}}
-/* 平板 / iPad（含横屏）：轨道至少 340px，在 1080 内容列里最多两列 */
-@media(min-width:701px){.grid{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}}
-/* 桌面：内容列约 1040px 时最多三列；条目不足时 auto-fit 仍会收起空列 */
-@media(min-width:1200px){.grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}}
+:root {
+  --bg: #fafafa;
+  --ink: #111111;
+  --mute: #5c5c5c;
+  --line: #e6e6e6;
+  --line-strong: #d0d0d0;
+  --card: #ffffff;
+  --red: #c41e3a;
+  --red-soft: #f7e8eb;
+  --cn: #c41e3a;
+  --intl: #1a3a5c;
+}
+* { box-sizing: border-box; }
+html { overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.7 "PingFang SC", "Noto Sans CJK SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3, .brand, .pull, .sec-title {
+  font-family: Georgia, "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "Source Han Serif SC", "STSong", serif;
+}
+
+.meta-strip {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--mute);
+}
+.meta-strip .inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+  min-height: 32px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 6px 20px;
+}
+
+.top {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  min-height: 56px;
+  flex-wrap: wrap;
+}
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.brand span { color: var(--red); }
+.nav nav { display: flex; flex-wrap: wrap; align-items: center; }
+.nav nav a {
+  margin-left: 22px;
+  color: var(--mute);
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+.nav nav a.on, .nav nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--red);
+}
+
+.hero { padding: 32px 0 28px; background: #fff; border-bottom: 1px solid var(--line); }
+.hero-list { padding-bottom: 8px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+}
+.badge.red { background: var(--red); color: #fff; border-color: var(--red); }
+.badge.outline { background: #fff; color: var(--ink); }
+.badge.soft { background: var(--red-soft); color: var(--red); border-color: transparent; }
+.kicker {
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font-size: 36px;
+  line-height: 1.28;
+  margin: 0 0 14px;
+  font-weight: 700;
+  max-width: 920px;
+}
+.hero h1 a:hover { color: var(--red); }
+.hero-list h1 { font-size: 34px; margin-bottom: 10px; }
+.lede { font-size: 16px; color: #222; max-width: 780px; margin: 0 0 16px; }
+.hero-meta {
+  font-size: 13px;
+  color: var(--mute);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: center;
+}
+.hero-meta strong { color: var(--ink); font-weight: 600; }
+.sep { color: var(--line-strong); }
+.hero-read {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.hero-read:hover { color: var(--red); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  margin-top: 18px;
+}
+.hero-list .stats, .post .stats { border: 1px solid var(--line); }
+.post .stats { margin: 0 0 28px; }
+.stat { padding: 16px 16px 14px; border-right: 1px solid var(--line); min-width: 0; }
+.stat:last-child { border-right: none; }
+.stat .n {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--red);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.stat .n.ink { color: var(--ink); font-size: 28px; padding-top: 6px; }
+.stat .l {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.points {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  background: #fff;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+}
+.points-label {
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  writing-mode: vertical-rl;
+}
+.points ul { margin: 0; padding: 4px 18px; list-style: none; }
+.points li { border-bottom: 1px solid var(--line); }
+.points li:last-child { border-bottom: none; }
+.points a {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.points a:hover { color: var(--red); }
+.points .num {
+  flex: 0 0 28px;
+  height: 28px;
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.section { padding: 32px 0 8px; }
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ink);
+}
+.sec-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 28px;
+  padding: 0 8px;
+  background: var(--red);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.sec-title { font-size: 18px; font-weight: 700; margin: 0; }
+.dh {
+  font-family: "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  font-size: 13px;
+  color: var(--mute);
+  margin: 22px 0 12px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+}
+
+/* 手机单列。平板起 auto-fit：1 条拉满，不会留下空的第三列。桌面内容宽约 1040px 时最多三列。 */
+.grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 16px 18px;
+  min-height: 168px;
+}
+.card:hover { border-color: var(--ink); }
+.card .meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--mute);
+  margin-bottom: 8px;
+}
+.tag {
+  color: #fff;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.tag.cn { background: var(--cn); }
+.tag.intl { background: var(--intl); }
+.card h3 { font-size: 17px; line-height: 1.4; margin: 0 0 8px; font-weight: 700; }
+.card p {
+  color: #444;
+  font-size: 13px;
+  margin: 0 0 12px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cf {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--mute);
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.read { color: var(--ink); font-weight: 700; }
+.card:hover .read { color: var(--red); }
+
+.post { max-width: 760px; margin: 0 auto; padding: 28px 20px 64px; }
+.crumbs {
+  font-size: 13px;
+  color: var(--mute);
+  margin: 0 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+.crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.crumbs a:hover { color: var(--red); }
+.post h1 { font-size: 32px; line-height: 1.32; margin: 0 0 12px; font-weight: 700; }
+.sub {
+  color: var(--mute);
+  font-size: 13px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+.lede-box {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+  margin-bottom: 22px;
+}
+.lede-box p { margin: 0; font-size: 17px; color: #222; line-height: 1.7; }
+
+.item {
+  margin: 0 0 8px;
+  padding: 8px 0 22px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 80px;
+}
+.item-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+.item-num {
+  flex: 0 0 40px;
+  height: 32px;
+  background: var(--red);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.item-head h2 { font-size: 22px; line-height: 1.35; margin: 0; font-weight: 700; }
+.company {
+  margin-top: 6px;
+  font-family: "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+.body-text { font-size: 16px; color: #222; margin: 0 0 12px; }
+.body-text.drop::first-letter {
+  float: left;
+  font-size: 52px;
+  line-height: 0.85;
+  font-weight: 800;
+  color: var(--red);
+  padding: 4px 8px 0 0;
+  font-family: Georgia, "Noto Serif CJK SC", "Songti SC", serif;
+}
+.body-text a, .src a, .notes a { color: var(--intl); text-decoration: underline; text-underline-offset: 2px; }
+.src { font-size: 13px; color: var(--mute); word-break: break-all; margin: 4px 0; }
+.pull {
+  margin: 4px 0 16px;
+  border-left: 3px solid var(--red);
+  background: var(--red-soft);
+  padding: 14px 16px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.notes { margin-top: 8px; }
+.notes p { font-size: 14px; color: var(--mute); margin: 10px 0; }
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 18px;
+  color: var(--mute);
+  font-size: 14px;
+}
+.back:hover { color: var(--red); }
+
+.foot {
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.6;
+  border-top: 1px solid var(--line);
+  margin-top: 36px;
+}
+.foot .wrap { padding-top: 22px; padding-bottom: 28px; }
+
+@media (min-width: 701px) and (max-width: 1199px) {
+  .grid { grid-template-columns: repeat(auto-fit, minmax(max(280px, calc((100% - 12px) / 2)), 1fr)); }
+}
+@media (min-width: 1200px) {
+  .grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+}
+@media (max-width: 700px) {
+  .wrap, .meta-strip .inner { padding-left: 16px; padding-right: 16px; }
+  .nav nav a { margin-left: 14px; font-size: 14px; }
+  .hero { padding-top: 22px; }
+  .hero h1, .post h1, .hero-list h1 { font-size: 26px; }
+  .stats { grid-template-columns: 1fr; }
+  .stat { border-right: none; border-bottom: 1px solid var(--line); }
+  .stat:last-child { border-bottom: none; }
+  .stat .n { font-size: 32px; }
+  .points { grid-template-columns: 1fr; }
+  .points-label {
+    writing-mode: horizontal-tb;
+    letter-spacing: 0.14em;
+    justify-content: flex-start;
+    padding: 8px 14px;
+  }
+  .post { padding-left: 16px; padding-right: 16px; }
+  .item-head h2 { font-size: 20px; }
+}
