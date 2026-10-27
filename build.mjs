@@ -28,7 +28,7 @@ const CSS=fs.readFileSync('src/style.css','utf8');
 const page=(title,active,inner,root='')=>`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><link rel="stylesheet" href="${root}style.css"></head><body>
 <header class="top"><div class="wrap nav"><a class="brand" href="${root}index.html">AI 日报</a><nav>
 <a href="${root}index.html" class="${active==='home'?'on':''}">首页</a><a href="${root}cn.html" class="${active==='cn'?'on':''}">${NAV.cn}</a><a href="${root}intl.html" class="${active==='intl'?'on':''}">${NAV.intl}</a><a href="${root}builders.html" class="${active==='builders'?'on':''}">${NAV.builders}</a></nav></div></header>
-<main class="wrap">${inner}</main><footer class="wrap foot">每日更新（上海时间）：国际约 09:00，国内约 21:00，Builders 约 09:00 与 21:00 · 内容由亦菲整理</footer></body></html>`;
+<main class="wrap">${inner}</main><footer class="wrap foot">每日更新（上海时间）：国际约 09:00，国内约 21:00，Builders 约 09:00 · 内容由亦菲整理</footer></body></html>`;
 const fmtMD=d=>{const [,m,dd]=d.split('-');return `${+m}月${+dd}日`;};
 // withDate：没有日分组标题时必须带月日。只写 09:00 时，昨天的国际晨报会被看成今天早上那期。
 const card=(p,withDate=false)=>`<a class="card" href="${p.root||''}p/${p.slug}.html"><div class="meta"><span class="tag ${p.type}">${TYPE[p.type]}</span><span class="when">${withDate?fmtMD(p.date)+' ':''}${p.time}</span></div><h3>${esc(p.headline)}</h3><p>${esc(p.summary)}</p><div class="cf"><span>${p.items} 条</span><span class="read">阅读 →</span></div></a>`;
