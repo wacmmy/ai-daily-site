@@ -18,7 +18,7 @@ h1,h2,h3,.brand{font-family:"Noto Serif CJK SC","Songti SC","Source Han Serif SC
 .ph1{font-size:34px;margin:36px 0 0}.post{max-width:760px;margin:36px auto}.post h1{font-size:34px;line-height:1.35;margin:12px 0 4px}.sub{color:var(--mute);font-size:14px;margin-bottom:12px}
 .body h3{font-size:22px;margin:30px 0 8px}.body h4{font-size:17px;margin:20px 0 4px}.src{font-size:13px;color:var(--mute);word-break:break-all;margin:2px 0}.src a,.body a{color:var(--intl);text-decoration:underline}
 .back{display:inline-block;margin-top:30px;color:var(--mute)}.foot{color:var(--mute);font-size:13px;padding:40px 20px;border-top:1px solid var(--line);margin-top:40px}
-@media(max-width:700px){.subs{grid-template-columns:1fr}.hero h1{font-size:28px}.nav{height:auto;min-height:60px;flex-wrap:wrap;row-gap:6px;padding:8px 0}.nav nav a{margin-left:12px;font-size:14px}}
+@media(max-width:700px){.subs{grid-template-columns:1fr}.hero h1{font-size:28px}.nav nav a{margin-left:12px;font-size:14px}}
 /* 平板 / iPad（含横屏）：轨道至少 340px，在 1080 内容列里最多两列 */
 @media(min-width:701px){.grid{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}}
 /* 桌面：内容列约 1040px 时最多三列；条目不足时 auto-fit 仍会收起空列 */
