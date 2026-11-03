@@ -115,11 +115,6 @@ function blockHtml(line,tag){
   if(tag==='h4') return `<h4>${linkify(text)}</h4>`;
   return `<p>${linkify(line)}</p>`;
 }
-function isStructural(line,tag){
-  if(looksLikeSource(line)) return false;
-  if(calloutOf(line)) return true;
-  return tag==='h3'||tag==='h4'||tag==='item';
-}
 // 从正文现有标题和编号条目生成目录与锚点，不改写简报原文。
 export function renderBody(t){
   const lines=t.split(/\n/).map(l=>l.trim()).filter(Boolean);
@@ -143,17 +138,21 @@ export function renderBody(t){
   let i=0;
   while(i<lines.length){
     const line=lines[i], tag=tags[i], co=calloutOf(line);
+    // 背景 / 实际影响 / 社区讨论是条目下的补充，不进目录，也不把后面的来源行吞进去。
     if(co){
-      const id=addSection(co.name);
       const parts=[];
       if(co.rest) parts.push(`<p>${linkify(co.rest)}</p>`);
-      i++;
-      while(i<lines.length&&!isStructural(lines[i],tags[i])){
-        parts.push(blockHtml(lines[i],tags[i]));
+      else {
         i++;
+        while(i<lines.length&&tags[i]==='p'&&!calloutOf(lines[i])&&!looksLikeSource(lines[i])){
+          parts.push(`<p>${linkify(lines[i])}</p>`);
+          i++;
+        }
+        html.push(`<aside class="callout"><div class="k">${esc(co.name)}</div>${parts.join('\n')}</aside>`);
+        continue;
       }
-      html.push(`<aside class="callout jump" id="${id}"><div class="k">${esc(co.name)}</div>${parts.join('\n')}</aside>`);
-      continue;
+      html.push(`<aside class="callout"><div class="k">${esc(co.name)}</div>${parts.join('\n')}</aside>`);
+      i++; continue;
     }
     if(looksLikeSource(line)||tag==='src'){html.push(blockHtml(line,tag)); i++; continue;}
     if(tag==='h3'||tag==='h4'){
