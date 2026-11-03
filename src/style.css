@@ -16,9 +16,23 @@ h1,h2,h3,.brand{font-family:"Noto Serif CJK SC","Songti SC","Source Han Serif SC
 .cf{margin-top:auto;display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}.read{color:var(--ink);font-weight:600}
 .meta{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--mute)}.when{white-space:nowrap}.tag{color:#fff;border-radius:4px;padding:1px 8px;font-size:12px}.tag.cn{background:var(--cn)}.tag.intl{background:var(--intl)}.tag.builders{background:var(--builders)}
 .ph1{font-size:34px;margin:36px 0 0}.post{max-width:760px;margin:36px auto}.post h1{font-size:34px;line-height:1.35;margin:12px 0 4px}.sub{color:var(--mute);font-size:14px;margin-bottom:12px}
-.body h3{font-size:22px;margin:30px 0 8px}.body h4{font-size:17px;margin:20px 0 4px}.src{font-size:13px;color:var(--mute);word-break:break-all;margin:2px 0}.src a,.body a{color:var(--intl);text-decoration:underline}
+.body h3{font-size:22px;margin:30px 0 8px}.body h4{font-size:17px;margin:20px 0 4px}.src{font-size:13px;color:var(--mute);margin:2px 0}.src a,.body a{color:var(--intl);text-decoration:underline}
+/* 长网址在正文和来源里换行，避免手机横向滚动 */
+.body,.body p,.body h3,.body h4,.src,.src a,.body a,.toc,.toc a,.callout{overflow-wrap:anywhere;word-break:break-word}
+.jump{scroll-margin-top:70px}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px 12px;margin:16px 0 8px;font-size:14px;line-height:1.6;max-width:100%}
+.toc-h{font-weight:600;color:var(--mute);font-size:13px}
+.toc ul{margin:4px 0 0;padding-left:1.15em}
+.toc li{margin:1px 0}
+.toc a{color:var(--intl);text-decoration:underline;text-underline-offset:2px}
+/* 背景 / 实际影响 / 社区讨论：手机、平板、桌面都通栏纵向叠放 */
+.callout{display:block;float:none;width:100%;max-width:100%;box-sizing:border-box;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:14px 0}
+.callout .k{font-weight:600;color:var(--mute);font-size:13px}
+.callout p{margin:6px 0}
 .back{display:inline-block;margin-top:30px;color:var(--mute)}.foot{color:var(--mute);font-size:13px;padding:40px 20px;border-top:1px solid var(--line);margin-top:40px}
-@media(max-width:700px){.subs{grid-template-columns:1fr}.hero h1{font-size:28px}.nav nav a{margin-left:12px;font-size:14px}}
+@media(max-width:700px){.subs{grid-template-columns:1fr}.hero h1{font-size:28px}.nav nav a{margin-left:12px;font-size:14px}.toc{padding:8px 10px 10px;font-size:13px}.toc ul{padding-left:1em}.toc ul ul{padding-left:.85em}.callout{display:block;width:100%;padding:10px 12px}}
+@media(min-width:701px){.callout,.toc{display:block;width:100%;max-width:100%}}
+@media(min-width:1100px){.callout{display:block;width:100%;max-width:100%}}
 /* 平板 / iPad（含横屏）：轨道至少 340px，在 1080 内容列里最多两列 */
 @media(min-width:701px){.grid{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}}
 /* 桌面：内容列约 1040px 时最多三列；条目不足时 auto-fit 仍会收起空列 */
